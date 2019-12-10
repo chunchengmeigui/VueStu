@@ -37,8 +37,6 @@
                 </Card>
             </i-col>
         </Row>
-        <router-link to="/main">Home</router-link>
-        <Button @click="toXxxRoute">toXxxRoute</Button>
     </div>
 </template>
 <script>
@@ -76,7 +74,7 @@
                         if (this.formInline.user === "admin" && this.formInline.password === "123") {
                             this.$router.push({name: 'Main'});
                         }else {
-                            this.$Message.success('账号或密码错误!');
+                            this.$Message.error('账号或密码错误!');
                         }
                     }
                     else {
