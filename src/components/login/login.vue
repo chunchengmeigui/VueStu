@@ -8,7 +8,7 @@
                     <Form ref="formInline" :model="formInline" :rules="ruleInline">
                         <FormItem prop="user">
                             <label>
-                                <Input type="text" v-model="formInline.user" placeholder="Username">
+                                <Input type="text" v-model="formInline.name" placeholder="Username">
                                     <Icon type="ios-person-outline" slot="prepend"></Icon>
                                 </Input>
                             </label>
@@ -26,12 +26,12 @@
                                            style="width: 200px;"></Input>
                                 </i-col>
                                 <i-col span="12">
-                                    <img  src="../../static/img/code.png"/>
+                                    <img :src="codeUrl" @click="getcode"/>
                                 </i-col>
                             </Row>
                         </FormItem>
                         <FormItem>
-                            <Button type="primary" @click="handleSubmit('formInline')">登录</Button>
+                            <Button type="primary" @click="handleSubmit()">登录</Button>
                         </FormItem>
                     </Form>
                 </Card>
@@ -40,16 +40,21 @@
     </div>
 </template>
 <script>
+    import {root} from "../../api/index"
+    import {root2} from "../../js/util"
+
     export default {
         data() {
             return {
                 formInline: {
-                    user: 'admin',
-                    password: '123',
+                    name: 'a',
+                    password: '111',
                     code: "1"
                 },
+                root2: root2,
+                codeUrl: root + "/code",
                 ruleInline: {
-                    user: [
+                    name: [
                         {required: true, message: '账号不能为空', trigger: 'blur'}
                     ],
                     code: [
@@ -68,23 +73,55 @@
             }
         },
         methods: {
-            handleSubmit(name) {
-                this.$refs[name].validate((valid) => {
+            handleSubmit() {
+                this.$refs['formInline'].validate((valid) => {
                     if (valid) {
-                        if (this.formInline.user === "admin" && this.formInline.password === "123") {
-                            this.$router.push({name: 'Main'});
-                        }else {
-                            this.$Message.error('账号或密码错误!');
-                        }
-                    }
-                    else {
+                        // if (this.formInline.user === "admin" && this.formInline.password === "123") {
+                        //     this.$router.push({name: 'Main'});
+                        //
+                        // }else {
+                        //     this.$Message.error('账号或密码错误!');
+                        // }
+                        this.$api.post('/login', this.formInline, r => {
+                            window.console.log(r);
+                            if (r.code === "00") {
+                                this.$router.push({name: 'Main'});
+                            } else {
+                                this.formInline.code = "";
+                                this.$Message.error(r.msg);
+                            }
+                        });
+                    } else {
                         this.$Message.error('必填项不能为空!');
                     }
                 })
             },
-            toXxxRoute: function(){
-                this.$router.push('/main')
+            getcode: function () {
+                this.codeUrl = root + "/code?" + new Date()
             }
+        }, mounted() {
+            // this.$Message.config({
+            //     top: 100,  //距离顶部的高度
+            //     duration: 30 //时间
+            // });
+            // this.$Notice.config({
+            //     top: 100,
+            //     duration: 3
+            // })
+        },
+        created() {  //全局监听键盘事件
+            var _this = this;
+            document.onkeydown = function (e) {
+                let key = e.keyCode;
+                if (key === 13) {
+                    _this.handleSubmit();
+                }
+            };
         }
     }
 </script>
+<style>
+    img:hover {
+        cursor: pointer;
+    }
+</style>
