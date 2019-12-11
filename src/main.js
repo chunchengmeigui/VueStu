@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';    // 使用 CSS
-import  router from "./router";
+import router from "./router";
 //引入api
 import api from '../src/api/index'
 
@@ -22,7 +22,7 @@ Vue.config.productionTip = false;
 //   duration: 3
 // });
 new Vue({
-  router,
-  render: h => h(App),
+    router,
+    render: h => h(App),
 }).$mount('#app');
 

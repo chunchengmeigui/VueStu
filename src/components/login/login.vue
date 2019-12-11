@@ -1,4 +1,3 @@
-<!-- eslint-disable -->
 <template>
     <div>
         <Row>
@@ -8,7 +7,7 @@
                     <Form ref="formInline" :model="formInline" :rules="ruleInline">
                         <FormItem prop="user">
                             <label>
-                                <Input type="text" v-model="formInline.name" placeholder="Username">
+                                <Input type="text" v-model="formInline.name" placeholder="Username"> @keyup.enter="handleSubmit()"
                                     <Icon type="ios-person-outline" slot="prepend"></Icon>
                                 </Input>
                             </label>
@@ -31,7 +30,7 @@
                             </Row>
                         </FormItem>
                         <FormItem>
-                            <Button type="primary" @click="handleSubmit()">登录</Button>
+                            <Button type="primary" @click="handleSubmit()" >登录</Button>
                         </FormItem>
                     </Form>
                 </Card>
@@ -41,24 +40,21 @@
 </template>
 <script>
     import {root} from "../../api/index"
-    import {root2} from "../../js/util"
-
     export default {
         data() {
             return {
                 formInline: {
-                    name: 'a',
-                    password: '111',
-                    code: "1"
+                    name: 'admin',
+                    password: '123',
+                    code: ""
                 },
-                root2: root2,
                 codeUrl: root + "/code",
                 ruleInline: {
                     name: [
                         {required: true, message: '账号不能为空', trigger: 'blur'}
                     ],
                     code: [
-                        {required: true, message: '验证码不能为空', trigger: 'blur'}
+                        // {required: true, message: '验证码不能为空', trigger: 'blur'}
                     ],
                     password: [
                         {required: true, message: '密码不能为空', trigger: 'blur'},
@@ -110,13 +106,13 @@
             // })
         },
         created() {  //全局监听键盘事件
-            var _this = this;
-            document.onkeydown = function (e) {
-                let key = e.keyCode;
-                if (key === 13) {
-                    _this.handleSubmit();
-                }
-            };
+            // var _this = this;
+            // document.onkeydown = function (e) {
+            //     let key = e.keyCode;
+            //     if (key === 13) {
+            //         _this.handleSubmit();
+            //     }
+            // };
         }
     }
 </script>
