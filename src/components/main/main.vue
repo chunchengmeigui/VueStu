@@ -17,14 +17,27 @@
             </Modal>
         </div>
         <div style="margin-top: 30px">
-            <Steps  :current="current" status="error">
+            <Steps :current="current" status="error">
                 <Step title="已完成" content="这里是该步骤的描述信息"></Step>
                 <Step title="进行中" content="这里是该步骤的描述信息"></Step>
                 <Step title="待进行" content="这里是该步骤的描述信息"></Step>
                 <Step title="待进行" content="这里是该步骤的描述信息"></Step>
             </Steps>
-            <i-button v-on:click="currNum()">下一步{{currNum}}</i-button>
+            <i-button v-on:click="currNum()">下一步</i-button>
         </div>
+        <hr/>
+        <div style="display: flex;justify-content: space-between">
+            <div style="background-color: white;height: 30px">
+                合同列表
+            </div>
+            <div>
+                <i-button>查</i-button>
+            </div>
+        </div>
+        <div class="ivu-table">
+            <i-table height="400" :columns="tabletitle" :data="data2"></i-table>
+        </div>
+
     </div>
 </template>
 
@@ -42,20 +55,45 @@
                 inputMsg: '双向绑定',
                 href: 'http://www.baidu.com',
                 modal1: false,
-                current:0
+                current: 0,
+                formInline: {
+                    "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqeC5jb20iLCJ1c2VyR2lkIjoiYTJiOTYzNzk2MThjNGNiYWJhMTFjNjQ0NjMwZmZhZjQiLCJpYXQiOjE1NzYxMzEwMDgsImV4cCI6MTU3NjMwNjIzN30.nJWr2PgMls-iY23q9mudLhdSpkxFBa0KGZzw2JBOBOw",
+                    "contractSpecies": 1
+                },
+                tabletitle: [
+                    {
+                        title: 'id',
+                        key: 'contractId'
+                    },
+                    {
+                        title: '合同名称',
+                        key: 'contractNo'
+                    },
+                    {
+                        title: '合同类型',
+                        key: 'contractTypeTxt'
+                    },
+                    {
+                        title: '状态',
+                        key: 'contractStatusTxt'
+                    }
+                ],
+                data2: []
             };
         },
         beforeCreate() {
             console.log("初始化之前")
         },
         created() {
+            this.tableInit();
+
             console.log('初始化之后')
         }, beforeUpdate() {
             console.log("更新-重新渲染")
         },
         methods: {
-            currNum(){
-                if (this.current == 3) {
+            currNum() {
+                if (this.current === 4) {
                     this.current = 0;
                 } else {
                     this.current += 1;
@@ -67,6 +105,13 @@
             cancel() {
                 this.$Message.info('点击了取消');
             },
+            tableInit() {
+                this.$api.post('http://127.0.0.1:8088/api/admin/v1/contractInfo/getPageList', this.formInline, r => {
+                    // window.console.log(r.data);
+                    if (r.code == "00") {
+                    }
+                });
+            }
         }
     }
 </script>
