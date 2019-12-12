@@ -79,6 +79,7 @@
                         //     this.$Message.error('账号或密码错误!');
                         // }
                         this.$api.post('/login', this.formInline, r => {
+                            window.console.log('---');
                             window.console.log(r);
                             if (r.code === "00") {
                                 this.$router.push({name: 'Main',params:{

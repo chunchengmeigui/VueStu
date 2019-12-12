@@ -34,6 +34,7 @@ function filterNull(o) {
   另外，不同的项目的处理方法也是不一致的，这里出错就是简单的alert
 */
 function apiAxios(method, url, params, success, failure) {
+
     if (params) {
         params = filterNull(params)
     }
@@ -46,7 +47,7 @@ function apiAxios(method, url, params, success, failure) {
         withCredentials: true  //此处为false的时候会造成多次请求不是一个会话
     })
     .then(function (res) {
-        if (res.data.code === "00" || res.data.code === "98") {
+        if (res.data.code === "00" || res.data.code === "98" || res.data.code === "99") {
             if (success) {
                 success(res.data)
             }
@@ -54,13 +55,13 @@ function apiAxios(method, url, params, success, failure) {
             if (failure) {
                 failure(res.data)
             } else {
-                window.alert('error: ' + JSON.stringify(res.data.msg))
+                window.alert('服务器错误: ' + JSON.stringify(res.data.msg))
             }
         }
     })
     .catch(function (err) {
         if (err) {
-            window.alert('请求出错'+err);
+            window.alert('axios请求出错'+err);
         }
     })
 }
