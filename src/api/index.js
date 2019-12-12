@@ -59,9 +59,8 @@ function apiAxios(method, url, params, success, failure) {
         }
     })
     .catch(function (err) {
-        let res = err.response;
         if (err) {
-            window.alert('api error'+res);
+            window.alert('请求出错'+err);
         }
     })
 }

@@ -6,7 +6,7 @@ Vue.use(VueRouter);//使用vue-router
 export default new VueRouter({
     routes:[
         {
-            path:"/hello",
+            path:"/login",
             name:"login",
             component:()=>import('@/components/login/login') // 引入组件方式1
         },

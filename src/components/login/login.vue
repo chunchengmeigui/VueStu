@@ -81,7 +81,9 @@
                         this.$api.post('/login', this.formInline, r => {
                             window.console.log(r);
                             if (r.code === "00") {
-                                this.$router.push({name: 'Main'});
+                                this.$router.push({name: 'Main',params:{
+                                    "token":"cdn"
+                                    }});
                             } else {
                                 this.formInline.code = "";
                                 this.$Message.error(r.msg);
