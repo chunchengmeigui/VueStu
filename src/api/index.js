@@ -39,6 +39,9 @@ function apiAxios(method, url, params, success, failure) {
         params = filterNull(params)
     }
     axios({
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'   //设置头信息
+        },
         method: method,
         url: url,
         data: method === 'POST' || method === 'PUT' ? params : null,
