@@ -1,5 +1,5 @@
-import iView from 'iview';
-const this_$Message = iView.Message;
+import {Message} from 'iview';
+import {Modal} from 'iview';
 // 配置API接口地址(加上export其他组件才能使用)
 export const serverIp = 'http://127.0.0.1:82';
 // 引用axios
@@ -35,7 +35,7 @@ function apiAxios(method, url, params, success, failure) {
     }
     axios({
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'   //设置头信息
+            // 'Content-Type': 'application/x-www-form-urlencoded'   //设置头信息
         },
         method: method,
         url: url,
@@ -45,7 +45,7 @@ function apiAxios(method, url, params, success, failure) {
         withCredentials: true  //此处为false的时候会造成多次请求不是一个会话
     })
         .then((res) => {
-            if (res.data.code === "00" || res.data.code === "98" || res.data.code === "99") {
+            if (res.data.code === "00" || res.data.code === "98") {
                 if (success) {
                     success(res.data)
                 }
@@ -53,14 +53,19 @@ function apiAxios(method, url, params, success, failure) {
                 if (failure) {
                     failure(res.data)
                 } else {
-                    this_$Message.warning('服务器错误:' + JSON.stringify(res.data.msg))
+                    Message.error({
+                       content:'服务器错误:' + JSON.stringify(res.data.msg),
+                       duration:5
+                   });
                 }
             }
         })
         .catch((err) => {
             if (err) {
-                console.log(iView, "this的指向")
-                this_$Message.warning('axios请求出错' + err)
+                Message.error({
+                    content:'axios请求出错' + err,
+                    duration:5
+                });
             }
         })
 }

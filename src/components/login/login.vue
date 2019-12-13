@@ -79,15 +79,20 @@
                         //     this.$Message.error('账号或密码错误!');
                         // }
                         this.$api.post('/login', this.formInline, r => {
-                            window.console.log('---');
                             window.console.log(r);
+                            window.console.log('---');
                             if (r.code === "00") {
                                 this.$router.push({name: 'Main',params:{
                                     "token":"cdn"
                                     }});
                             } else {
                                 this.formInline.code = "";
-                                this.$Message.error(r.msg);
+                                // this.$Message.error(r.msg);
+                                this.$Modal.error({
+                                    title: "系统提示",
+                                    content:r.msg ,
+                                    width:"80%"
+                                });
                             }
                         });
                     } else {
