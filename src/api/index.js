@@ -1,7 +1,10 @@
+import iView from 'iview';
+const this_$Message = iView.Message;
 // 配置API接口地址(加上export其他组件才能使用)
-export const root = 'http://127.0.0.1:82';
+export const serverIp = 'http://127.0.0.1:82';
 // 引用axios
-var axios = require('axios');
+const axios = require('axios');
+
 // 自定义判断元素类型JS
 function toType(obj) {
     return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
@@ -9,7 +12,7 @@ function toType(obj) {
 
 // 参数过滤函数
 function filterNull(o) {
-    for (var key in o) {
+    for (const key in o) {
         if (o[key] === null) {
             delete o[key]
         }
@@ -24,15 +27,7 @@ function filterNull(o) {
     return o
 }
 
-/*
-  接口处理函数
-  这个函数每个项目都是不一样的，我现在调整的是适用于
-  https://cnodejs.org/api/v1 的接口，如果是其他接口
-  需要根据接口的参数进行调整。参考说明文档地址：
-  https://cnodejs.org/topic/5378720ed6e2d16149fa16bd
-  主要是，不同的接口的成功标识和失败提示是不一致的。
-  另外，不同的项目的处理方法也是不一致的，这里出错就是简单的alert
-*/
+
 function apiAxios(method, url, params, success, failure) {
 
     if (params) {
@@ -46,28 +41,31 @@ function apiAxios(method, url, params, success, failure) {
         url: url,
         data: method === 'POST' || method === 'PUT' ? params : null,
         params: method === 'GET' || method === 'DELETE' ? params : null,
-        baseURL: root,
+        baseURL: serverIp,
         withCredentials: true  //此处为false的时候会造成多次请求不是一个会话
     })
-    .then(function (res) {
-        if (res.data.code === "00" || res.data.code === "98" || res.data.code === "99") {
-            if (success) {
-                success(res.data)
-            }
-        } else {
-            if (failure) {
-                failure(res.data)
+        .then((res) => {
+            if (res.data.code === "00" || res.data.code === "98" || res.data.code === "99") {
+                if (success) {
+                    success(res.data)
+                }
             } else {
-                window.alert('服务器错误: ' + JSON.stringify(res.data.msg))
+                if (failure) {
+                    failure(res.data)
+                } else {
+                    this_$Message.warning('服务器错误:' + JSON.stringify(res.data.msg))
+                }
             }
-        }
-    })
-    .catch(function (err) {
-        if (err) {
-            window.alert('axios请求出错'+err);
-        }
-    })
+        })
+        .catch((err) => {
+            if (err) {
+                console.log(iView, "this的指向")
+                this_$Message.warning('axios请求出错' + err)
+            }
+        })
 }
+
+
 
 // 返回在vue模板中的调用接口
 export default {
