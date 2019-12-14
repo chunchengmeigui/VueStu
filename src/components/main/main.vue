@@ -44,6 +44,7 @@
                     height="400"
                     :columns="tabletitle"
                     :data="data2"
+                    :row-class-name="rowClassName"
                     @on-selection-change="fun1">
             </i-table>
         </div>
@@ -124,6 +125,7 @@
                     },
                     {
                         title: 'id',
+                        sortable: true,
                         align: 'center',
                         width: 150,
                         key: 'id'
@@ -136,24 +138,58 @@
                     {
                         title: '密码',
                         align: 'center',
+                        className: 'demo-table-info-column', //该列统一设置类名背景色
                         key: 'password'
                     },
                     {
                         title: '昵称',
                         align: 'center',
-                        key: 'nickName'
+                        key: 'nickName',
+                        render: (h, params) => {
+                            if (params.row.id === 1) {
+                                return h('span', {
+                                    style: {
+                                        color: 'red'
+                                    },
+                                }, params.row.nickName);
+                            } else {
+                                return h('span', params.row.nickName);
+                            }
+                        }
                     },
                     {
                         title: '年龄',
                         align: 'center',
-                        key: 'age'
+                        key: 'age',
+                        render: (h, params) => {
+                            return h('a', {}, '判断年龄=' + params.row.age);
+                        }
                     },
                     {
                         title: '操作',
-                        // key: 'action',
                         width: 200,
                         align: 'center',
                         render: (h, params) => {
+                            if (params.row.id === 1) {
+                                return h('div', [
+                                        h('Button', {
+                                            props: {
+                                                type: 'error',
+                                                size: 'small'
+                                            },
+                                            style: {
+                                                marginRight: '5px'
+                                            },
+                                            on: {
+                                                click: () => {
+                                                    this.tan(params.index)
+                                                }
+                                            }
+                                        }, '弹')
+
+                                    ],
+                                );
+                            }
                             return h('div', [
                                     h('Button', {
                                         props: {
@@ -165,7 +201,6 @@
                                         },
                                         on: {
                                             click: () => {
-                                                console.log(params)
                                                 this.tableData = params.row;
                                                 this.modal2 = true
                                             }
@@ -181,7 +216,6 @@
                                         },
                                         on: {
                                             click: () => {
-                                                console.log(params)
                                                 this.remove(params)
                                             }
                                         }
@@ -196,7 +230,6 @@
                                         },
                                         on: {
                                             click: () => {
-                                                console.log(params)
                                                 this.tan(params.index)
                                             }
                                         }
@@ -204,7 +237,6 @@
 
                                 ],
                             );
-
                         }
                     }
                 ],
@@ -224,6 +256,14 @@
             }
         },
         methods: {
+            rowClassName(row, index) {
+                if (index === 1) {
+                    return 'demo-table-info-row';
+                } else if (index === 3) {
+                    return 'demo-table-error-row';
+                }
+                return '';
+            },
             back() {
                 this.$router.push({name: 'HelloWorld'});
             },
@@ -248,7 +288,6 @@
                     this.$Message.error("请选择要删除的条目")
                 } else {
                     this.$api.post("removeByIds", ids, r => {
-                        console.log(r)
                         if (r.code == "00") {
                             this.$Message.info("删除成功")
                             this.tableInit();
@@ -304,6 +343,14 @@
                     if (r.code === "00") {
                         this.data2 = [];
                         for (let i = 0; i < r.data.records.length; i++) {
+                            let listDate = r.data.records[i];
+                            //给单个单元格设置背景色
+                            if (listDate.id === 1) {
+                                listDate.cellClassName = {
+                                    id: 'demo-table-info-cell-age',  //给id为1的，表格的key为id的设置类名样式
+                                    age: 'demo-table-info-cell-address'//给id为1的，表格的key为age的设置类名样式
+                                };
+                            }
                             this.data2.push(r.data.records[i])
                         }
                     }
@@ -349,9 +396,38 @@
         }
     }
 </script>
+<style>
+    .ivu-table .demo-table-info-row td {
+        background-color: #2db7f5;
+        color: #fff;
+    }
 
-<style scoped>
-    div {
-        /*border: 1px seagreen solid;*/
+    .ivu-table .demo-table-error-row td {
+        background-color: #ff6600;
+        color: #fff;
+    }
+
+    .ivu-table td.demo-table-info-column {
+        background-color: #2db7f5;
+        color: #fff;
+    }
+
+    .ivu-table .demo-table-info-cell-name {
+        background-color: #2db7f5;
+        color: #fff;
+    }
+
+    .ivu-table .demo-table-info-cell-age {
+        background-color: #ff6600;
+        color: #fff;
+    }
+
+    .ivu-table .demo-table-info-cell-address {
+        background-color: #187;
+        color: #fff;
+    }
+
+    .first {
+        background-color: crimson;
     }
 </style>
