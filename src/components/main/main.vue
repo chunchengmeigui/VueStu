@@ -300,6 +300,7 @@
             },
             model() {
                 this.add = true;
+                this.removeValue(this.adddata, 'adddata')
             },
             ok() {
                 this.$Message.info('点击了确定');
