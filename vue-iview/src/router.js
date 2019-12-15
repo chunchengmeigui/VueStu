@@ -8,16 +8,25 @@ export default new VueRouter({
         {
             path:"/login",
             name:"login",
+            meta: {
+                title: '登陆'
+            },
             component:()=>import('@/components/login/login') // 引入组件方式1
         },
         {
             path:'/',
             name:'HelloWorld',
+            meta: {
+                title: 'HelloWord'
+            },
             component:HelloWorld // 引入组件方式2
         },
         {
             path:'/main',
             name:'Main',
+            meta: {
+                title: '首页'
+            },
             component:Main // 引入组件方式2
         }
     ]
