@@ -5,12 +5,16 @@ import 'iview/dist/styles/iview.css';    // 使用 CSS
 import router from "./router";
 //引入api
 import api from '../src/api/index'
+// 引用axios
+const axios = require('axios');
 
 // 将API方法绑定到全局
 Vue.prototype.$api = api;
 
 Vue.use(iView);
 Vue.config.productionTip = false;
+
+axios.defaults.withCredentials = true;
 
 //全局设置提示框
 // Vue.prototype.$Message.config({
@@ -27,10 +31,10 @@ new Vue({
 }).$mount('#app');
 
 
-  //页面标题设置
+//页面标题设置
 router.beforeEach((to, from, next) => {
     /* 路由发生变化修改页面meta */
-    if(to.meta.content){
+    if (to.meta.content) {
         let head = document.getElementsByTagName('head');
         let meta = document.createElement('meta');
         meta.content = to.meta.content;
