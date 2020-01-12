@@ -1,5 +1,5 @@
 import {Message} from 'iview';
-import {Modal} from 'iview';
+// import {Modal} from 'iview';
 // 配置API接口地址(加上export其他组件才能使用)
 export const serverIp = 'http://127.0.0.1:82';
 // 引用axios

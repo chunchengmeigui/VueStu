@@ -3,7 +3,6 @@ package com.example.mybatisplustest.controller;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;
-import cn.hutool.captcha.ShearCaptcha;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -12,7 +11,10 @@ import com.example.mybatisplustest.entity.User;
 import com.example.mybatisplustest.exception.MyException;
 import com.example.mybatisplustest.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -53,7 +55,6 @@ public class UserController {
             throw new MyException("账号或密码错误");
         }
         return JsonResult.buildSuccess("成功");
-//        return JsonResult.buildError("000");
     }
 
 

@@ -7,6 +7,7 @@ import router from "./router";
 import api from '../src/api/index'
 // 引用axios
 const axios = require('axios');
+axios.defaults.withCredentials = true;
 
 // 将API方法绑定到全局
 Vue.prototype.$api = api;
@@ -14,7 +15,7 @@ Vue.prototype.$api = api;
 Vue.use(iView);
 Vue.config.productionTip = false;
 
-axios.defaults.withCredentials = true;
+
 
 //全局设置提示框
 // Vue.prototype.$Message.config({

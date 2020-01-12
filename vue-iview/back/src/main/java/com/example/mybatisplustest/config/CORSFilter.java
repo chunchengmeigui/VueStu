@@ -33,7 +33,7 @@ public class CORSFilter implements Filter {
         if (origin == null) {
             origin = req.getHeader("Referer");
         }
-        resp.setHeader("Access-Control-Allow-Origin", origin);//这里不能写*，*代表接受所有域名访问，如写*则下面一行代码无效。谨记
+        resp.setHeader("Access-Control-Allow-Origin", origin);
         resp.setHeader("Access-Control-Allow-Credentials", "true");//true代表允许携带cookie
         // 配置options的请求返回
         resp.setHeader("Access-Control-Allow-Headers", "Content-Type,XFILENAME,XFILECATEGORY,XFILESIZE");

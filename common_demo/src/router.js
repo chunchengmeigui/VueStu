@@ -1,8 +1,6 @@
-import Vue from 'vue';
 import vueRouter from 'vue-router';
 import Login from "./components/login";
 
-Vue.use(vueRouter);
 export default new vueRouter({
     routes: [
         {
