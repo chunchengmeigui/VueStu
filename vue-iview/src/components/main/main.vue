@@ -32,7 +32,7 @@
         </div>
         <hr/>
         <div style="width: 600px;text-align: left;margin-top: 30px">
-            <i-input v-model="keyword" placeholder="请输入用户名" style="width: 300px" left></i-input>
+            <i-input v-model="form.keyword" placeholder="请输入用户名" style="width: 300px" left></i-input>
             <i-button v-on:click="search()" type="success">搜索</i-button>
             <i-button v-on:click="model()" type="success">新增</i-button>
             <i-button type="error" @click="batshDelByIds()">批量删除</i-button>
@@ -41,12 +41,13 @@
         <div style="text-align: center;justify-content: center;">
             <i-table
                     border
-                    height="400"
+                    height="600"
                     :columns="tabletitle"
                     :data="data2"
                     :row-class-name="rowClassName"
                     @on-selection-change="fun1">
             </i-table>
+            <Page :total="form.pageTotal" show-total></Page>
         </div>
         <button @click="back">ss</button>
         <Modal v-model="add" title="新增用户" @on-ok="addUser" @on-cancel="cancelUser" :mask-closable="false">
@@ -95,13 +96,18 @@
                     nickName: '',
                     age: 0
                 },
+                form: {
+                    pageTotal: 0,
+                    pageIndex:0,
+                    pageSize:10,
+                    keyword: '',
+                },
                 inputMsg: '双向绑定',
                 href: 'http://www.baidu.com',
                 modal1: false,
                 modal2: false,
                 add: false,
                 current: 0,
-                keyword: '',
                 tableData: {},
                 batshDelIds: [],
                 ruleInline: {
@@ -340,7 +346,7 @@
                 this.$Message.info('点击了取消');
             },
             tableInit() {
-                this.$api.get("/userList", {"keyword": this.keyword}, r => {
+                this.$api.get("/userList", this.form, r => {
                     if (r.code === "00") {
                         this.data2 = [];
                         for (let i = 0; i < r.data.records.length; i++) {
@@ -352,6 +358,7 @@
                                     age: 'demo-table-info-cell-address'//给id为1的，表格的key为age的设置类名样式
                                 };
                             }
+                            this.form.pageTotal = r.data.total;
                             this.data2.push(r.data.records[i])
                         }
                     }
@@ -385,7 +392,12 @@
                 })
             },
             search() {
-                this.$api.get("/userList", {"keyword": this.keyword}, r => {
+                // eslint-disable-next-line no-console
+                console.log("--");
+                this.$api.get("/userList",
+                    this
+                    .form,
+                    r => {
                     this.data2 = [];
                     if (r.code === "00") {
                         for (let i = 0; i < r.data.records.length; i++) {
