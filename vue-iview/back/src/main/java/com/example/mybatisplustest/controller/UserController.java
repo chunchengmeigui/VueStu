@@ -90,7 +90,8 @@ public class UserController {
             queryWrapper.like("name", keyword);
         }
         IPage<User> iPage = new Page<>(page, pageSize);
-        return JsonResult.buildSuccess(iUserService.page(iPage,queryWrapper));
+        IPage<User> page1 = iUserService.page(iPage, queryWrapper);
+        return JsonResult.buildSuccess(page1);
     }
 
     /**
