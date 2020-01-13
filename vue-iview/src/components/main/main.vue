@@ -32,13 +32,13 @@
         </div>
         <hr/>
         <div style="width: 600px;text-align: left;margin-top: 30px">
-            <i-input v-model="form.keyword" placeholder="请输入用户名" style="width: 300px" left></i-input>
-            <i-button v-on:click="search()" type="success">搜索</i-button>
-            <i-button v-on:click="model()" type="success">新增</i-button>
-            <i-button type="error" @click="batshDelByIds()">批量删除</i-button>
+            <i-input v-model="form.keyword" placeholder="请输入用户名" style="width: 300px" left clearable></i-input>
+            <i-button v-on:click="search()" type="success" style="margin-left: 30px">搜索</i-button>
+            <i-button v-on:click="model()" type="success" style="margin-left: 30px">新增</i-button>
+            <i-button type="error" @click="batshDelByIds()" style="margin-left: 30px">批量删除</i-button>
         </div>
 
-        <div style="text-align: center;justify-content: center;">
+        <div style="text-align: center;justify-content: center;margin-top: 20px">
             <i-table
                     border
                     height="150"
