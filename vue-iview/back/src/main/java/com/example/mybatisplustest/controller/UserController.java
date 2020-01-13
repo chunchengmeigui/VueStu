@@ -82,14 +82,14 @@ public class UserController {
      * date: 2019/12/12
      */
     @RequestMapping("userList")
-    public JsonResult userList(@RequestParam(defaultValue = "0", required = false, value = "page") Integer page,
+    public JsonResult userList(@RequestParam(defaultValue = "0", required = false, value = "pageIndex") Integer pageIndex,
                                @RequestParam(defaultValue = "10", required = false, value = "pageSize") Integer pageSize,
                                @RequestParam(required = false,value = "keyword") String keyword) {
         QueryWrapper<User> queryWrapper=new QueryWrapper<>();
         if (keyword.length()!=0){
             queryWrapper.like("name", keyword);
         }
-        IPage<User> iPage = new Page<>(page, pageSize);
+        IPage<User> iPage = new Page<>(pageIndex, pageSize);
         IPage<User> page1 = iUserService.page(iPage, queryWrapper);
         return JsonResult.buildSuccess(page1);
     }

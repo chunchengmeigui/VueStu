@@ -41,13 +41,13 @@
         <div style="text-align: center;justify-content: center;">
             <i-table
                     border
-                    height="600"
+                    height="150"
                     :columns="tabletitle"
                     :data="data2"
                     :row-class-name="rowClassName"
                     @on-selection-change="fun1">
             </i-table>
-            <Page :total="form.pageTotal" show-total></Page>
+            <Page :total="form.pageTotal" show-total @on-change="page" :page-size="form.pageSize"></Page>
         </div>
         <button @click="back">ss</button>
         <Modal v-model="add" title="新增用户" @on-ok="addUser" @on-cancel="cancelUser" :mask-closable="false">
@@ -99,7 +99,7 @@
                 form: {
                     pageTotal: 0,
                     pageIndex:0,
-                    pageSize:10,
+                    pageSize:2,
                     keyword: '',
                 },
                 inputMsg: '双向绑定',
@@ -284,6 +284,13 @@
                 //监听多选
                 this.batshDelIds = selection;
             },
+            // eslint-disable-next-line no-unused-vars
+            page(index){
+                // eslint-disable-next-line no-console
+                console.log(index)
+              this.form.pageIndex=index
+                this.tableInit();
+            },
             batshDelByIds() {
                 //    批量删除
                 let ids = [];
@@ -393,13 +400,14 @@
             },
             search() {
                 // eslint-disable-next-line no-console
-                console.log("--");
+                this.form.pageIndex=0;
                 this.$api.get("/userList",
                     this
                     .form,
                     r => {
                     this.data2 = [];
                     if (r.code === "00") {
+                        this.form.pageTotal = r.data.total;
                         for (let i = 0; i < r.data.records.length; i++) {
                             this.data2.push(r.data.records[i])
                         }
