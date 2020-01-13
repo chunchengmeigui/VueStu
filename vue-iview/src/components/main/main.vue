@@ -8,6 +8,7 @@
         <i-input icon="ios-clock-outline" placeholder="请输入..." style="width: 300px" v-model="inputMsg"></i-input>
         <a :href="href">百度</a>
         <br>
+        <p class="cdn">这是测试css样式</p>
         <div>
             <i-button type="primary" @click="modal1 = true">显示对话框{{modal1}}</i-button>
             <Modal v-model="modal1" title="普通的Modal对话框标题" @on-ok="ok" @on-cancel="cancel" :mask-closable="false">
@@ -144,7 +145,7 @@
                     {
                         title: '密码',
                         align: 'center',
-                        className: 'demo-table-info-column', //该列统一设置类名背景色
+                        className: 'css-table-info-column', //该列统一设置类名背景色
                         key: 'password'
                     },
                     {
@@ -264,9 +265,9 @@
         methods: {
             rowClassName(row, index) {
                 if (index === 1) {
-                    return 'demo-table-info-row';
+                    return 'css-table-info-row';
                 } else if (index === 3) {
-                    return 'demo-table-error-row';
+                    return 'css-table-error-row';
                 }
                 return '';
             },
@@ -361,8 +362,8 @@
                             //给单个单元格设置背景色
                             if (listDate.id === 1) {
                                 listDate.cellClassName = {
-                                    id: 'demo-table-info-cell-age',  //给id为1的，表格的key为id的设置类名样式
-                                    age: 'demo-table-info-cell-address'//给id为1的，表格的key为age的设置类名样式
+                                    id: 'css-table-info-cell-age',  //给id为1的，表格的key为id的设置类名样式
+                                    age: 'css-table-info-cell-address'//给id为1的，表格的key为age的设置类名样式
                                 };
                             }
                             this.form.pageTotal = r.data.total;
@@ -418,6 +419,7 @@
     }
 </script>
 <style>
+    @import url("../../assets/css/demo.css");
     .ivu-table .demo-table-info-row td {
         background-color: #2db7f5;
         color: #fff;
