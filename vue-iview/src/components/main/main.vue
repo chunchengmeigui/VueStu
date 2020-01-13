@@ -98,8 +98,8 @@
                 },
                 form: {
                     pageTotal: 0,
-                    pageIndex:0,
-                    pageSize:2,
+                    pageIndex: 0,
+                    pageSize: 2,
                     keyword: '',
                 },
                 inputMsg: '双向绑定',
@@ -285,10 +285,10 @@
                 this.batshDelIds = selection;
             },
             // eslint-disable-next-line no-unused-vars
-            page(index){
+            page(index) {
                 // eslint-disable-next-line no-console
                 console.log(index)
-              this.form.pageIndex=index
+                this.form.pageIndex = index
                 this.tableInit();
             },
             batshDelByIds() {
@@ -400,19 +400,19 @@
             },
             search() {
                 // eslint-disable-next-line no-console
-                this.form.pageIndex=0;
+                this.form.pageIndex = 0;
                 this.$api.get("/userList",
                     this
-                    .form,
+                        .form,
                     r => {
-                    this.data2 = [];
-                    if (r.code === "00") {
-                        this.form.pageTotal = r.data.total;
-                        for (let i = 0; i < r.data.records.length; i++) {
-                            this.data2.push(r.data.records[i])
+                        this.data2 = [];
+                        if (r.code === "00") {
+                            this.form.pageTotal = r.data.total;
+                            for (let i = 0; i < r.data.records.length; i++) {
+                                this.data2.push(r.data.records[i])
+                            }
                         }
-                    }
-                });
+                    });
             }
         }
     }

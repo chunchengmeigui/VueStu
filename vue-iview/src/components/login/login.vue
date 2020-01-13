@@ -39,7 +39,7 @@
     </div>
 </template>
 <script>
-    import {serverIp} from "../../api/index"
+    // import {serverIp} from "../../api/index"
     export default {
         data() {
             return {
@@ -48,7 +48,7 @@
                     password: '123',
                     code: ""
                 },
-                codeUrl: serverIp + "/code",
+                codeUrl:this.$serverIp + "/code",
                 ruleInline: {
                     name: [
                         {required: true, message: '账号不能为空', trigger: 'blur'}
@@ -101,7 +101,7 @@
                 })
             },
             getcode: function () {
-                this.codeUrl = serverIp + "/code?" + new Date()
+                this.codeUrl = this.$serverIp  + "/code?" + new Date()
             }
         }, mounted() {
             // this.$Message.config({

@@ -1,7 +1,7 @@
 import {Message} from 'iview';
 // import {Modal} from 'iview';
 // 配置API接口地址(加上export其他组件才能使用)
-export const serverIp = 'http://127.0.0.1:82';
+export let serverIp = 'http://127.0.0.1:82';
 // 引用axios
 const axios = require('axios');
 
@@ -54,17 +54,17 @@ function apiAxios(method, url, params, success, failure) {
                     failure(res.data)
                 } else {
                     Message.error({
-                       content:'服务器错误:' + JSON.stringify(res.data.msg),
-                       duration:5
-                   });
+                        content: '服务器错误:' + JSON.stringify(res.data.msg),
+                        duration: 5
+                    });
                 }
             }
         })
         .catch((err) => {
             if (err) {
                 Message.error({
-                    content:'axios请求出错' + err,
-                    duration:5
+                    content: 'axios请求出错' + err,
+                    duration: 5
                 });
             }
         })
@@ -72,6 +72,15 @@ function apiAxios(method, url, params, success, failure) {
 
 
 
+//导出变量
+export let name222 = 2;
+
+//导出方法
+export function one() {
+    console.log("one")
+}
+
+//------------------------------------------
 // 返回在vue模板中的调用接口
 export default {
     get: function (url, params, success, failure) {
@@ -85,5 +94,15 @@ export default {
     },
     delete: function (url, params, success, failure) {
         return apiAxios('DELETE', url, params, success, failure)
+    },
+    getServerAdd: function () {
+        return serverIp
     }
-}
+};
+
+// 1.export与export default均可用于导出常量、函数、文件、模块等
+// 2.在一个文件或模块中，export、import可以有多个，export default仅有一个
+// 3.通过export方式导出，在导入时要加{ }，export default则不需要
+// 4.
+// (1) 输出单个值，使用export
+// (2) 输出多个值，使用export default

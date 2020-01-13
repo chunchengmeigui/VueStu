@@ -4,14 +4,15 @@ import iView from 'iview';
 import 'iview/dist/styles/iview.css';    // 使用 CSS
 import router from "./router";
 //引入api
-import api from '../src/api/index'
+import api, {serverIp,name222,one} from '../src/api/index';
 // 引用axios
 const axios = require('axios');
 axios.defaults.withCredentials = true;
 
 // 将API方法绑定到全局
 Vue.prototype.$api = api;
-
+//将serverIp设置为全局
+Vue.prototype.$serverIp = serverIp;
 Vue.use(iView);
 Vue.config.productionTip = false;
 
