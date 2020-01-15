@@ -7,6 +7,7 @@
         {{inputMsg}}：
         <i-input icon="ios-clock-outline" placeholder="请输入..." style="width: 300px" v-model="inputMsg"></i-input>
         <a :href="href">百度</a>
+        <router-link to="/">router-link跳转</router-link>
         <br>
         <p class="cdn">这是测试css样式</p>
         <div>

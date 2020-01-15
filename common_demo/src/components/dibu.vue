@@ -15,6 +15,6 @@
       外部css引入
     */
     /*@import "./css/comm.css";*/
-    @import url("./css/comm.css");
+    @import url("../assets/css/comm.css");
 
 </style>
